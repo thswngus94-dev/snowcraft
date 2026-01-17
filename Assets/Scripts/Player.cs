@@ -2,27 +2,48 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private Vector3 offset;
+
     public GameObject snowballPrefab;
 
-    void Update()
+    void OnMouseDown()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Fire();
-        }
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = 10f;
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
 
-
+        offset = transform.position - worldPos;
 
     }
 
-    void Fire()
+    void OnMouseDrag()
     {
-        GameObject snowball = Instantiate(snowballPrefab, transform.position, Quaternion.identity);
-        Rigidbody2D ballRigidbody2D = snowball.GetComponent<Rigidbody2D>();
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = 10f;
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
 
-        ballRigidbody2D.AddForce(new Vector2(1, 1) * 10f, ForceMode2D.Impulse);
-
+        transform.position = worldPos + offset;
     }
+
+    //void Update()
+    //{
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    Fire();
+        //}
+
+    //}
+
+    //void Fire()
+    //{
+    //    GameObject snowball = Instantiate(snowballPrefab, transform.position, Quaternion.identity);
+    //    Rigidbody2D ballRigidbody2D = snowball.GetComponent<Rigidbody2D>();
+
+    //    ballRigidbody2D.AddForce(new Vector2(1, 1) * 10f, ForceMode2D.Impulse);
+
+    //}
+
+
 
 
 }
