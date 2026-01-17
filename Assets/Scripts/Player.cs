@@ -6,6 +6,12 @@ public class Player : MonoBehaviour
 
     public GameObject snowballPrefab;
 
+    //private int hp = 3;
+
+    //private SpriteRenderer spriteRenderer;
+    //private Color hitColor = Color.white;
+    //private Color originalColor;
+
     private float chargeTime = 0f;
     public float maxForce = 30f;
     public float chargeSpeed = 10f;
@@ -36,6 +42,38 @@ public class Player : MonoBehaviour
     {
         Fire();
     }
+
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("EnemySnowball"))
+    //    {
+    //        Destroy(collision.gameObject);
+
+    //        hp = hp - 1;
+
+    //        HitColor();
+
+    //        if (hp == 0)
+    //        {
+    //            Destroy(gameObject);
+    //        }
+
+    //    }
+
+    //}
+
+    //void HitColor()
+    //{
+    //    spriteRenderer.color = hitColor;
+
+    //    Invoke("ResetColor", 0.1f);
+
+    //}
+
+    //private void ResetColor()
+    //{
+    //    spriteRenderer.color = originalColor;
+    //}
 
 
     void Fire()
