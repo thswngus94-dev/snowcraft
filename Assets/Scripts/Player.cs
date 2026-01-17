@@ -20,7 +20,6 @@ public class Player : MonoBehaviour
         offset = transform.position - worldPos;
 
         chargeTime = 0f;
-
     }
 
     void OnMouseDrag()
