@@ -6,17 +6,23 @@ public class Player : MonoBehaviour
 
     public GameObject snowballPrefab;
 
-    //private int hp = 3;
+    private int hp = 3;
 
-    //private SpriteRenderer spriteRenderer;
-    //private Color hitColor = Color.white;
-    //private Color originalColor;
+    private SpriteRenderer spriteRenderer;
+    private Color hitColor = Color.red;
+    private Color originalColor;
 
     private float chargeTime = 0f;
     public float maxForce = 30f;
     public float chargeSpeed = 10f;
 
-    
+
+    private void Start()
+    {
+        // È÷Æ® Àü »ö±ò
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        originalColor = spriteRenderer.color;
+    }
 
     void OnMouseDown()
     {
@@ -43,37 +49,37 @@ public class Player : MonoBehaviour
         Fire();
     }
 
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (collision.gameObject.CompareTag("EnemySnowball"))
-    //    {
-    //        Destroy(collision.gameObject);
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("EnemySnowball"))
+        {
+            Destroy(collision.gameObject);
 
-    //        hp = hp - 1;
+            hp = hp - 1;
 
-    //        HitColor();
+            HitColor();
 
-    //        if (hp == 0)
-    //        {
-    //            Destroy(gameObject);
-    //        }
+            if (hp == 0)
+            {
+                Destroy(gameObject);
+            }
 
-    //    }
+        }
 
-    //}
+    }
 
-    //void HitColor()
-    //{
-    //    spriteRenderer.color = hitColor;
+    void HitColor()
+    {
+        spriteRenderer.color = hitColor;
 
-    //    Invoke("ResetColor", 0.1f);
+        Invoke("ResetColor", 0.1f);
 
-    //}
+    }
 
-    //private void ResetColor()
-    //{
-    //    spriteRenderer.color = originalColor;
-    //}
+    private void ResetColor()
+    {
+        spriteRenderer.color = originalColor;
+    }
 
 
     void Fire()

@@ -20,6 +20,16 @@ public class Enemy : MonoBehaviour
     private float leftLimit;
     private float rightLimit;
 
+    // ·£´ý µ¿ÀÛ¿ë
+    private bool isStopped = false;
+    private float timer = 0f;
+    private float nextActionTime;
+
+    // Àû±º ´«µ¢ÀÌ
+    public GameObject enemySnowballPrefab;
+    private float Firetimer = 0f;
+    private float nextFiretime = 1.0f;
+
     private void Start()
     {
         // È÷Æ® Àü »ö±ò
@@ -27,7 +37,7 @@ public class Enemy : MonoBehaviour
         originalColor = spriteRenderer.color;
 
         // ·£´ý ÀÌµ¿
-        speed = Random.Range(1f, 2f);
+        speed = Random.Range(1f, 2.5f);
 
         float screenHeight = Camera.main.orthographicSize * 2;
         float screenWidth = screenHeight * Camera.main.aspect;
@@ -38,13 +48,43 @@ public class Enemy : MonoBehaviour
         leftLimit = -(screenWidth / 2) + blank;
         rightLimit = - blank;
 
-        
+        SetNextAction();
 
     }
 
     private void Update()
     {
-        // ·£´ý ÀÌµ¿
+        // ·£´ý µ¿ÀÛ
+        timer += Time.deltaTime;
+
+        if (timer >= nextActionTime)
+        {
+            isStopped = !isStopped;
+            timer = 0f;
+            SetNextAction();
+
+            Firetimer = 0f;
+        }
+       
+        if (isStopped == false)
+        {
+            Move();
+        }
+        else
+        {
+            Firetimer += Time.deltaTime;
+
+            if (Firetimer >= nextFiretime)
+            {
+                Fire();
+                Firetimer = 0f;
+                nextFiretime = Random.Range(0.5f, 1.5f);
+            }
+        }
+    }
+
+    void Move()
+    {
         Vector3 moveDirection = new Vector3(directionX, directionY, 0);
         transform.Translate(moveDirection * speed * Time.deltaTime);
 
@@ -53,12 +93,13 @@ public class Enemy : MonoBehaviour
         else if (transform.position.y < bottomLimit)
             directionY = 1;
 
-        if(transform.position.x > rightLimit)
+        if (transform.position.x > rightLimit)
             directionX = -1;
-        else if(transform.position.x < leftLimit)
+        else if (transform.position.x < leftLimit)
             directionX = 1;
-
     }
+
+  
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -88,5 +129,29 @@ public class Enemy : MonoBehaviour
         spriteRenderer.color = originalColor;
     }
 
+
+    void SetNextAction()
+    {
+        if (isStopped)
+        {
+            nextActionTime = Random.Range(1f, 2.5f);
+        }
+        else
+        {
+            nextActionTime = Random.Range(1f, 3f);
+        }
+    }
+    void Fire()
+    {
+        GameObject enemysnowball = Instantiate(enemySnowballPrefab, transform.position, Quaternion.identity);
+        Rigidbody2D enemyballRigidbody2D = enemysnowball.GetComponent<Rigidbody2D>();
+
+       if(enemyballRigidbody2D != null)
+        {
+            enemyballRigidbody2D.linearVelocity = Vector2.right * 5f;
+        }
+
+       Destroy(enemysnowball, 3f);
+    }
 
 }
