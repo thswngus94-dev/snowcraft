@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class StageManager : MonoBehaviour
 {
@@ -9,35 +10,51 @@ public class StageManager : MonoBehaviour
     public int baseEnemyCount = 3;
     public int nextEnemyIncrease = 3;
 
-    // 레벨 체크
-    private bool isLevelCleared = false;
-
     private void Awake()
     {
-        instance = this;
+        // 매니저가 없으면 인스턴스 사용 + 씬 이동 시 계속 둘 것
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+
+            // 씬 로드 시 함수실행
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+        // 매니저가 있으면 중복생성 방지
+        else
+        {
+            Destroy(gameObject);
+        }
+
     }
 
 
-    void Start()
-    {   // 인덱스 번호 체크
-        int sceneIndex = SceneManager.GetActiveScene().buildIndex;
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        
+        // scene = SceneManager.GetActiveScene()
+        int sceneIndex = scene.buildIndex;
+
+        // 버튼 연결
+        BindButtons(sceneIndex);
 
         // 타이틀/엔딩 일 때
-        if(sceneIndex == 0 ||  sceneIndex == 4)
+        if (sceneIndex == 0 ||  sceneIndex == 4)
         {
             return;
         }
 
-        int currentLevel = sceneIndex;
         // 스테이지별 적군 수 계산
-        int enemyCountToSpawn = baseEnemyCount + (currentLevel-1) * nextEnemyIncrease;
+        int enemyCount = baseEnemyCount + (sceneIndex - 1) * nextEnemyIncrease;
 
-        if(GameManager.instance != null)
+        if (GameManager.instance != null)
         {
-            GameManager.instance.SpawnUnit(enemyCountToSpawn);
+            GameManager.instance.SpawnUnit(enemyCount);
         }
     }
 
+    
     public void StartNextLevel()
     {
         Invoke("LoadNextLevel", 2.0f);
@@ -45,8 +62,6 @@ public class StageManager : MonoBehaviour
 
     void LoadNextLevel()
     {
-        isLevelCleared = false;
-
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
 
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
@@ -54,5 +69,46 @@ public class StageManager : MonoBehaviour
             SceneManager.LoadScene(nextSceneIndex);
         }
     }
+
+    //-----------------------------------
+    // 버튼 함수
+    public void StartGame()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void ExitGame()
+    {
+       
+        Application.Quit();
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    // 버튼 연결
+    void BindButtons(int index)
+    {
+        if (index == 0)
+        {
+            GameObject startButton = GameObject.Find("StartButton");
+            if (startButton != null)
+                startButton.GetComponent<Button>().onClick.AddListener(StartGame);
+
+            GameObject exitButton = GameObject.Find("ExitButton");
+            if (exitButton != null)
+                exitButton.GetComponent<Button>().onClick.AddListener(ExitGame);
+        }
+       
+        else if (index == 4)
+        {
+            GameObject restartButton = GameObject.Find("RestartButton");
+            if (restartButton != null)
+                restartButton.GetComponent<Button>().onClick.AddListener(RestartGame);
+        }
+    }
+    //-----------------------------------
 
 }

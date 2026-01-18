@@ -18,7 +18,17 @@ public class GameManager : MonoBehaviour
     //-----------------------------------
     private void Awake()
     {
-        instance = this;
+        // 매니저가 없으면 인스턴스 사용 + 씬 이동 시 계속 둘 것
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        // 매니저가 있으면 중복생성 방지
+        else
+        {
+            Destroy(gameObject);
+        }
     }
     //-----------------------------------
 
