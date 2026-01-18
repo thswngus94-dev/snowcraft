@@ -42,6 +42,7 @@ public class Enemy : MonoBehaviour
 
         if (GameManager.instance != null)
         {
+            // 적군 생성 체크
             GameManager.instance.AddEnemy();
         }
 
@@ -58,9 +59,6 @@ public class Enemy : MonoBehaviour
         rightLimit = - blank;
 
         SetNextAction();
-
-
-
     }
 
     private void Update()
@@ -98,6 +96,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    // 이동
     void Move()
     {
         Vector3 moveDirection = new Vector3(directionX, directionY, 0);
@@ -115,7 +114,7 @@ public class Enemy : MonoBehaviour
     }
 
   
-
+    // 눈덩이에 맞았을 때
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
@@ -139,7 +138,8 @@ public class Enemy : MonoBehaviour
             }
         }
     }
-
+    //-----------------------------------
+    // 색정보
     void HitColor()
     {
         spriteRenderer.color = hitColor;
@@ -150,8 +150,9 @@ public class Enemy : MonoBehaviour
     {
         spriteRenderer.color = originalColor;
     }
+    //-----------------------------------
 
-
+    // 상태체크 후 다음행동 정하기
     void SetNextAction()
     {
         if (isStopped)
@@ -163,6 +164,7 @@ public class Enemy : MonoBehaviour
             nextActionTime = Random.Range(1f, 3f);
         }
     }
+    // 눈덩이 발사
     void Fire()
     {
         GameObject enemysnowball = Instantiate(enemySnowballPrefab, transform.position, Quaternion.identity);
@@ -175,7 +177,8 @@ public class Enemy : MonoBehaviour
 
        Destroy(enemysnowball, 3f);
     }
-
+    //-----------------------------------
+    // 스턴상태
     void ApplyStun()
     {
         isStunned = true;
@@ -188,11 +191,13 @@ public class Enemy : MonoBehaviour
         isStunned = false;
         spriteRenderer.color = originalColor;
     }
+    //-----------------------------------
 
     private void OnDestroy()
     {
         if (GameManager.instance != null)
         {
+            // 적군 죽음 체크
             GameManager.instance.RemoveEnemy();
         }
     }

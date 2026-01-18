@@ -28,6 +28,9 @@ public class Player : MonoBehaviour
         originalColor = spriteRenderer.color;
     }
 
+    //-----------------------------------
+    // 마우스 입력
+    // 마우스 첫 클릭 시
     void OnMouseDown()
     {
         // 스턴일 때 무시
@@ -41,7 +44,7 @@ public class Player : MonoBehaviour
 
         chargeTime = 0f;
     }
-
+    // 마우스 드래그 중
     void OnMouseDrag()
     {
         // 스턴일 때 무시
@@ -55,7 +58,7 @@ public class Player : MonoBehaviour
 
         chargeTime += Time.deltaTime;
     }
-
+    // 마우스 뗄 때
     void OnMouseUp()
     {
         // 스턴일 때 무시
@@ -63,7 +66,10 @@ public class Player : MonoBehaviour
             return;
         Fire();
     }
+    //-----------------------------------
 
+    //-----------------------------------
+    // 눈덩이에 맞았을 때
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("EnemySnowball"))
@@ -85,7 +91,8 @@ public class Player : MonoBehaviour
         }
 
     }
-
+    //-----------------------------------
+    // 색정보
     void HitColor()
     {
         spriteRenderer.color = hitColor;
@@ -98,8 +105,9 @@ public class Player : MonoBehaviour
     {
         spriteRenderer.color = originalColor;
     }
+    //-----------------------------------
 
-
+    // 눈덩이 발사
     void Fire()
     {
         Vector3 spawnPos = transform.position + new Vector3(-1f, 0, 0);
@@ -113,6 +121,8 @@ public class Player : MonoBehaviour
 
     }
 
+    //-----------------------------------
+    // 스턴상태
     void ApplyStun()
     {
         isStunned = true;
@@ -125,6 +135,6 @@ public class Player : MonoBehaviour
         isStunned = false;
         spriteRenderer.color = originalColor;
     }
-
+    //-----------------------------------
 
 }
