@@ -30,6 +30,9 @@ public class Enemy : MonoBehaviour
     private float Firetimer = 0f;
     private float nextFiretime = 1.0f;
 
+    // ½ºÅÏ  »óÅÂ
+    private bool isStunned = false;
+
     private void Start()
     {
         // È÷Æ® Àü »ö±ò
@@ -54,6 +57,10 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        // ½ºÅÏÀÏ ¶§ ¸ØÃã
+        if (isStunned)
+            return;
+
         // ·£´ý µ¿ÀÛ
         timer += Time.deltaTime;
 
@@ -78,7 +85,7 @@ public class Enemy : MonoBehaviour
             {
                 Fire();
                 Firetimer = 0f;
-                nextFiretime = Random.Range(0.5f, 1.5f);
+                nextFiretime = Random.Range(1f, 2f);
             }
         }
     }
@@ -103,17 +110,24 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
+        if (isStunned)
+            return;
+
         if (collision.gameObject.CompareTag("Snowball"))
         {
             Destroy(collision.gameObject);
 
             hp = hp - 1;
-
             HitColor(); 
 
             if (hp == 0)
             {
                 Destroy(gameObject);
+            }
+            else
+            {
+                ApplyStun();
             }
         }
     }
@@ -154,4 +168,16 @@ public class Enemy : MonoBehaviour
        Destroy(enemysnowball, 3f);
     }
 
+    void ApplyStun()
+    {
+        isStunned = true;
+        spriteRenderer.color = new Color(1, 1, 1, 0.5f);
+        Invoke("ResetStun", 1.0f);
+    }
+
+    private void ResetStun()
+    {
+        isStunned = false;
+        spriteRenderer.color = originalColor;
+    }
 }
