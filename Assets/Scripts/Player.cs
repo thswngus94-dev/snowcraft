@@ -17,15 +17,30 @@ public class Player : MonoBehaviour
     public float maxForce = 30f;
     public float chargeSpeed = 10f;
 
-    // 스턴  상태
+    // 스턴상태
     private bool isStunned = false;
+    // 무적상태
+    private bool isInvincible = false;
 
 
     private void Start()
     {
-        // 히트 전 색깔
+        // 생성 시 색깔
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
+        // 무적 상태로 색변경
+        spriteRenderer.color = new Color(1, 1, 1, 0.5f);
+
+        // 무적상태 2초뒤 무적해제함수 실행
+        isInvincible = true;
+        Invoke("TurnOffInvincible", 2f);
+    }
+
+    // 무적해제
+    void TurnOffInvincible()
+    {
+        isInvincible = false;
+        spriteRenderer.color = originalColor;
     }
 
     //-----------------------------------
@@ -74,8 +89,15 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("EnemySnowball"))
         {
-            Destroy(collision.gameObject);
+            // 무적상태일 시 눈덩이만 파괴
+            if (isInvincible)
+            {
+                Destroy(collision.gameObject);
+                return;
+            }
 
+            // 눈덩이 맞으면 눈덩이 없애고 + hp감수 + 색변경
+            Destroy(collision.gameObject);
             hp = hp - 1;
             HitColor();
 
