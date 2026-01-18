@@ -39,6 +39,12 @@ public class Enemy : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
 
+
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.AddEnemy();
+        }
+
         // ·£´ý ÀÌµ¿
         speed = Random.Range(1f, 2.5f);
 
@@ -52,6 +58,8 @@ public class Enemy : MonoBehaviour
         rightLimit = - blank;
 
         SetNextAction();
+
+
 
     }
 
@@ -180,4 +188,13 @@ public class Enemy : MonoBehaviour
         isStunned = false;
         spriteRenderer.color = originalColor;
     }
+
+    private void OnDestroy()
+    {
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.RemoveEnemy();
+        }
+    }
+
 }
