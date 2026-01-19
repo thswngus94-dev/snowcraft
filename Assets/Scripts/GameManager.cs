@@ -33,10 +33,7 @@ public class GameManager : MonoBehaviour
     //-----------------------------------
 
     // Enemy 생성/삭제 시 호출 Count만 체크
-    public void AddEnemy()
-    {
-        currentEnemyCount++;
-    }
+   
     public void RemoveEnemy()
     {
         currentEnemyCount--;
@@ -55,7 +52,7 @@ public class GameManager : MonoBehaviour
 
     public void SpawnUnit(int enemyCountToSpawn)
     {
-        currentEnemyCount = 0;   
+        currentEnemyCount = enemyCountToSpawn;
         isLevelCleared = false;
 
         Camera cam = Camera.main;

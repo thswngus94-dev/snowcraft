@@ -57,6 +57,7 @@ public class StageManager : MonoBehaviour
     
     public void StartNextLevel()
     {
+        CancelInvoke("LoadNextLevel");
         Invoke("LoadNextLevel", 2.0f);
     }
 

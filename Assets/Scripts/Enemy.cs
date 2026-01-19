@@ -39,13 +39,6 @@ public class Enemy : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
 
-
-        if (GameManager.instance != null)
-        {
-            // 적군 생성 체크
-            GameManager.instance.AddEnemy();
-        }
-
         // 랜덤 이동
         speed = Random.Range(1f, 2.5f);
 
@@ -195,7 +188,7 @@ public class Enemy : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (GameManager.instance != null)
+        if (gameObject.scene.isLoaded && GameManager.instance != null)
         {
             // 적군 죽음 체크
             GameManager.instance.RemoveEnemy();
