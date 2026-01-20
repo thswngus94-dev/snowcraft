@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public GameObject playerPrefabs;
     public GameObject enemyPrefabs;
 
-    public int playerCount = 3;
+    private int playerCount = 2;
 
     // 레벨 체크
     private bool isLevelCleared = false;
@@ -50,6 +50,19 @@ public class GameManager : MonoBehaviour
     }
     //-----------------------------------
 
+    public void RemovePlayer()
+    {
+        playerCount--;
+
+        if (playerCount <= 0)
+        {
+            if (StageManager.instance != null)
+            {
+                StageManager.instance.GameOver();
+            }
+        }
+    }
+    //-----------------------------------
     public void SpawnUnit(int enemyCountToSpawn)
     {
         currentEnemyCount = enemyCountToSpawn;
@@ -65,6 +78,7 @@ public class GameManager : MonoBehaviour
         // 왼쪽에 플레이어 랜덤생성
         for (int i = 0; i < playerCount; i++)
         {
+           
             float randomX = Random.Range(0.5f, halfWidth - blank);
             float randomY = Random.Range(-halfHeight, halfHeight - blank);
             Instantiate(playerPrefabs, new Vector3(randomX, randomY, 0) , Quaternion.identity);

@@ -545,6 +545,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4088468621578955223, guid: 5f95c934b8c8b9d429c2cc2f53bf9722, type: 3}
+      propertyPath: playerCount
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6168344523647156268, guid: 5f95c934b8c8b9d429c2cc2f53bf9722, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -602,6 +606,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2496791639124936128, guid: 259f6877dca5b0044af2bd28c7f3539c, type: 3}
+      propertyPath: baseEnemyCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2496791639124936128, guid: 259f6877dca5b0044af2bd28c7f3539c, type: 3}
+      propertyPath: nextEnemyIncrease
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3944026002419514791, guid: 259f6877dca5b0044af2bd28c7f3539c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 32.24383

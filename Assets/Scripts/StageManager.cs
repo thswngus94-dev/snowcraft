@@ -7,8 +7,8 @@ public class StageManager : MonoBehaviour
    
     public static StageManager instance;
 
-    public int baseEnemyCount = 3;
-    public int nextEnemyIncrease = 3;
+    private int baseEnemyCount = 3;
+    private int nextEnemyIncrease = 1;
 
     private void Awake()
     {
@@ -39,8 +39,8 @@ public class StageManager : MonoBehaviour
         // 버튼 연결
         BindButtons(sceneIndex);
 
-        // 타이틀/엔딩 일 때
-        if (sceneIndex == 0 ||  sceneIndex == 4)
+        // 타이틀/엔딩(승리/패배) 일 때
+        if (sceneIndex == 0 ||  sceneIndex == 4 || sceneIndex == 5)
         {
             return;
         }
@@ -59,6 +59,12 @@ public class StageManager : MonoBehaviour
     {
         CancelInvoke("LoadNextLevel");
         Invoke("LoadNextLevel", 2.0f);
+    }
+
+    public void GameOver()
+    {
+        CancelInvoke("LoadNextLevel");
+        SceneManager.LoadScene(5);
     }
 
     void LoadNextLevel()
@@ -103,7 +109,7 @@ public class StageManager : MonoBehaviour
                 exitButton.GetComponent<Button>().onClick.AddListener(ExitGame);
         }
        
-        else if (index == 4)
+        else if (index == 4 || index == 5)
         {
             GameObject restartButton = GameObject.Find("RestartButton");
             if (restartButton != null)

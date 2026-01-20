@@ -159,4 +159,14 @@ public class Player : MonoBehaviour
     }
     //-----------------------------------
 
+    // 죽었을 때 알림
+    private void OnDestroy()
+    { 
+        if (gameObject.scene.isLoaded && GameManager.instance != null)
+        {
+            // 아군 죽음 체크
+            GameManager.instance.RemovePlayer();
+        }
+    }
+
 }

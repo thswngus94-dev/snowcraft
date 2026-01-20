@@ -186,6 +186,7 @@ public class Enemy : MonoBehaviour
     }
     //-----------------------------------
 
+    // 죽었을 때 알림
     private void OnDestroy()
     {
         if (gameObject.scene.isLoaded && GameManager.instance != null)
