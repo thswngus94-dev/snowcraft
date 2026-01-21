@@ -8,12 +8,12 @@ public class StageManager : MonoBehaviour
    
     public static StageManager instance;
 
-    private int baseEnemyCount = 3;
+    private int baseEnemyCount = 2;
     private int nextEnemyIncrease = 1;
 
     // 스테이지 표시용
-    public GameObject stageUIPrefab; 
-    public float displayTime = 2.0f; 
+    public GameObject stageUIPrefab;
+    public float animationDuration = 2.0f;
 
     private void Awake()
     {
@@ -75,7 +75,14 @@ public class StageManager : MonoBehaviour
                 levelText.text = textContent;
             }
 
-            Destroy(uiInstance, displayTime);
+            Animator animator = uiInstance.GetComponent<Animator>();
+            if (animator != null)
+            {
+                animator.Play("Stage");  
+            }
+
+            // 애니메이션 재생 시간 후에 오브젝트 파괴
+            Destroy(uiInstance, animationDuration);
         }
     }
 

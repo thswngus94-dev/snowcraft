@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private int hp = 3;
+    private int hp = 2;
 
     // 히트시 색변경용
     private SpriteRenderer spriteRenderer;
