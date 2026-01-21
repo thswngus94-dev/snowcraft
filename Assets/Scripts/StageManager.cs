@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,6 +10,10 @@ public class StageManager : MonoBehaviour
 
     private int baseEnemyCount = 3;
     private int nextEnemyIncrease = 1;
+
+    // 스테이지 표시용
+    public GameObject stageUIPrefab; 
+    public float displayTime = 2.0f; 
 
     private void Awake()
     {
@@ -45,6 +50,9 @@ public class StageManager : MonoBehaviour
             return;
         }
 
+        // 스테이지 알림 UI 생성
+        ShowStageUI("LEVEL " + sceneIndex);
+
         // 스테이지별 적군 수 계산
         int enemyCount = baseEnemyCount + (sceneIndex - 1) * nextEnemyIncrease;
 
@@ -54,7 +62,24 @@ public class StageManager : MonoBehaviour
         }
     }
 
-    
+    void ShowStageUI(string textContent)
+    {
+        if (stageUIPrefab != null)
+        {
+            
+            GameObject uiInstance = Instantiate(stageUIPrefab);
+
+            TextMeshProUGUI levelText = uiInstance.GetComponentInChildren<TextMeshProUGUI>();
+            if (levelText != null)
+            {
+                levelText.text = textContent;
+            }
+
+            Destroy(uiInstance, displayTime);
+        }
+    }
+
+
     public void StartNextLevel()
     {
         CancelInvoke("LoadNextLevel");
