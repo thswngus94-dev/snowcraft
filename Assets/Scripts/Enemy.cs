@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 
     // 히트시 색변경용
     private SpriteRenderer spriteRenderer;
-    private Color hitColor = Color.white;
+    private Color hitColor = Color.red;
     private Color originalColor;
 
     // 랜덤이동용
@@ -175,7 +175,7 @@ public class Enemy : MonoBehaviour
     void ApplyStun()
     {
         isStunned = true;
-        spriteRenderer.color = new Color(1, 1, 1, 0.5f);
+        spriteRenderer.color = new Color(1, 0, 0, 0.5f);
         Invoke("ResetStun", 1.0f);
     }
 

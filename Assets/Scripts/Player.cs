@@ -14,8 +14,12 @@ public class Player : MonoBehaviour
 
     // 눈덩이 던지기
     private float chargeTime = 0f;
-    public float maxForce = 30f;
+    public float minForce = 5f;
+    public float maxForce = 50f;
     public float chargeSpeed = 10f;
+
+    private bool isReloading = false;
+    public float fireDelay = 0.5f;
 
     // 스턴상태
     private bool isStunned = false;
@@ -79,7 +83,13 @@ public class Player : MonoBehaviour
         // 스턴일 때 무시
         if (isStunned)
             return;
-        Fire();
+
+        if (!isReloading)
+        {
+            Fire();
+        }
+
+        chargeTime = 0f;
     }
     //-----------------------------------
 
@@ -118,7 +128,6 @@ public class Player : MonoBehaviour
     void HitColor()
     {
         spriteRenderer.color = hitColor;
-
         Invoke("ResetColor", 0.1f);
 
     }
@@ -132,15 +141,24 @@ public class Player : MonoBehaviour
     // 눈덩이 발사
     void Fire()
     {
+        isReloading = true;
+
         Vector3 spawnPos = transform.position + new Vector3(-1f, 0, 0);
         GameObject snowball = Instantiate(snowballPrefab, spawnPos, Quaternion.identity);
         Rigidbody2D ballRigidbody2D = snowball.GetComponent<Rigidbody2D>();
 
-        float finalForce = Mathf.Min(chargeTime * chargeSpeed, maxForce);
+        float calculatedForce = chargeTime * chargeSpeed;
+        float finalForce = Mathf.Clamp(calculatedForce, minForce, maxForce);
 
         // 이 부분 따로 정리해보기
-        ballRigidbody2D.AddForce(new Vector2(-1, 0) * 10f, ForceMode2D.Impulse);
+        ballRigidbody2D.AddForce(Vector2.left * finalForce, ForceMode2D.Impulse);
 
+        Invoke("ResetReload", fireDelay);
+    }
+
+    void ResetReload()
+    {
+        isReloading = false;
     }
 
     //-----------------------------------

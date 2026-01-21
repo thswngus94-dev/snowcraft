@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1505578282917640493}
   - component: {fileID: 541456439042304496}
   - component: {fileID: 412698826400166574}
-  - component: {fileID: -9124552058619280702}
   - component: {fileID: 4410255392529059179}
+  - component: {fileID: -9124552058619280702}
   m_Layer: 7
   m_Name: Snowball
   m_TagString: Snowball
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -120,18 +120,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-9124552058619280702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 348383322225964765}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38f3b30c7998f8f428d6c24abf60346a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Snowball
 --- !u!61 &4410255392529059179
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -178,3 +166,15 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 8.08, y: 3.87}
   m_EdgeRadius: 0
+--- !u!114 &-9124552058619280702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348383322225964765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38f3b30c7998f8f428d6c24abf60346a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Snowball

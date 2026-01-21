@@ -11,5 +11,4 @@ public class Snowball : MonoBehaviour
     {
         Destroy(gameObject);
     }
-
 }
